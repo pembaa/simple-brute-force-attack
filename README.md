@@ -1,1 +1,4 @@
-# simple-brute-force-attack
+This code is an example of password cracking in C programming language. It allows the user to set a password and then attempts to crack it by trying all possible four-digit numbers. If the password is successfully cracked, the program then prompts the user to enter the password again to access their user information. If the entered password matches the actual password, the program displays the user's information. Otherwise, access to user information is denied.
+The program uses a struct called UserInfo to store user information. This struct contains fields for the user's name, address, phone number, email, and their parents' names.
+The program uses the time.h library to record the start and end times of the password cracking process and calculate the elapsed time. It also uses the string.h library to compare passwords and copy user information to the UserInfo struct.
+Overall, this program is an example of the dangers of weak passwords and the importance of using strong passwords to protect sensitive information. It also demonstrates the potential vulnerabilities of storing user information in plaintext.
