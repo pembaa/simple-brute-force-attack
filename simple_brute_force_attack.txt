@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define MAX_PASSWORD_LENGTH 16 // Maximum length of the password
+#define MAX_TRIES 10000 // Maximum number of tries to crack the password
+
+// Struct to hold user information
+typedef struct {
+    char name[50];
+    char address[100];
+    char phone[15];
+    char email[50];
+    char father_name[50];
+    char mother_name[50];
+} UserInfo;
+
+int main() {
+    char username[50], password[MAX_PASSWORD_LENGTH], entered_password[MAX_PASSWORD_LENGTH];
+    char choice;
+
+    // Ask the user to set a password
+    printf("Enter your username: ");
+    scanf("%s", username);
+    printf("Please enter a pin (at least 4 digits): ");
+    scanf("%s", password);
+
+    // Ask the user if they want to crack the password
+    printf("Do you want to crack your password (y/n)? ");
+    scanf(" %c", &choice);
+
+    if (choice == 'y') {
+        int i;
+        char candidate[MAX_PASSWORD_LENGTH];
+        time_t start_time, end_time;
+        double elapsed_time;
+
+        // Record the start time
+        time(&start_time);
+
+        // Try all numbers from 0 to 9999 as passwords
+        for (i = 0; i < MAX_TRIES; i++) {
+            // Generate the next candidate password
+            sprintf(candidate, "%04d", i); // Pad with zeros to make it 4 digits long
+
+            // Check if the candidate password matches the actual password
+            if (strcmp(candidate, password) == 0) {
+                // Record the end time
+                time(&end_time);
+                elapsed_time = difftime(end_time, start_time);
+
+                printf("Password cracked successfully: %s\n", password);
+                printf("Elapsed time: %f seconds\n", elapsed_time);
+
+                // Prompt the user to enter the password again to access user information
+                printf("Enter your password again to access your user information: ");
+                scanf("%s", entered_password);
+
+                if (strcmp(entered_password, password) == 0) {
+                    // Save user information
+                    UserInfo user_info;
+                    strcpy(user_info.name, "Pemba Tamang");
+                    strcpy(user_info.address, "Soyambhu, Kathmandu");
+                    strcpy(user_info.phone, "9865488522");
+                    strcpy(user_info.email, "pemba@gmail.com");
+                    strcpy(user_info.father_name, "Raja Tamang");
+                    strcpy(user_info.mother_name, "Rani Tamang");
+
+                    // Print the user information
+                    printf("\nName: %s\n", user_info.name);
+                    printf("Address: %s\n", user_info.address);
+                    printf("Phone: %s\n", user_info.phone);
+                    printf("Email: %s\n", user_info.email);
+                    printf("Father's Name: %s\n", user_info.father_name);
+                    printf("Mother's Name: %s\n", user_info.mother_name);
+                } else {
+                    printf("Incorrect password. Access to user information denied.\n");
+                }
+
+                return 0;
+            }
+
+            // Print the current password attempt every 1000 tries
+            if (i % 1000 == 0) {
+                printf("Attempted password: %s\n", candidate);
+            }
+        }
+
+        printf("Unable to crack the password.\n");
+    } else {
+        printf("Exiting.\n");
+    }
+
+    return 0;
+}
